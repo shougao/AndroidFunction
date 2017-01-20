@@ -13,3 +13,4 @@ gradle/
 gradlew
 gradlew.bat
 gradle.properties
+main.log

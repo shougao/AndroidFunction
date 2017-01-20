@@ -13,15 +13,27 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="449dp"
-        android:layout_alignParentEnd="true">
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout">
 
         <Button
             android:text="启动NFC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_nfc" />
+
+        <Button
+            android:text="CheckPreferAPP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_prefer_app" />
+
+        <TextView
+            android:text="preferapp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_preferapp" />
+
     </LinearLayout>
+
 </RelativeLayout>

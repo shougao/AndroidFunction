@@ -1,28 +1,92 @@
 package com.example.zhangqc.androidfunction;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "zqc";
+    private TextView mPreferAppView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initView();
+
+    }
+
+    private void initView() {
         findViewById(R.id.button_nfc).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startNfc();
             }
         });
+        findViewById(R.id.button_prefer_app).setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                testDefaultActivity();
+            }
+        });
+
+        mPreferAppView = (TextView) findViewById(R.id.textView_preferapp);
     }
 
+    // 1.
     private void startNfc() {
         startActivity(new Intent("android.settings.NFC_SETTINGS"));
+    }
+
+    // 2.
+    private void testDefaultActivity() {
+        Intent viewIntent = new Intent(Intent.ACTION_VIEW);
+        viewIntent.setData(Uri.parse("http://www.baidu.com"));
+
+        PackageManager pm = getPackageManager();
+        ResolveInfo matchInfo = pm.resolveActivity(viewIntent, PackageManager.MATCH_ALL);
+        ResolveInfo preferInfo = pm.resolveActivity(viewIntent, PackageManager.MATCH_DEFAULT_ONLY);
+        mPreferAppView.setText("matchapp:" + matchInfo.resolvePackageName + "\n" + "defaultapp:" + preferInfo.resolvePackageName);
+
+        startActivity(viewIntent);
+
+
+        isDefault(this.getComponentName());
+
+    }
+
+    /**
+     * Returns true if the supplied component name is the preferred activity
+     * for any action.
+     * @param component The ComponentName of your Activity, e.g.
+     *    Activity#getComponentName().
+     */
+    boolean isDefault(ComponentName component) {
+        ArrayList<ComponentName> components = new ArrayList<ComponentName>();
+        ArrayList<IntentFilter> filters = new ArrayList<IntentFilter>();
+//        filters.add( new IntentFilter(Intent.ACTION_MAIN));
+//        filters.add(new IntentFilter(Intent.ACTION_DEFAULT));
+
+        getPackageManager().getPreferredActivities(filters, components, null); // get all default application.
+        for(ComponentName name : components){
+            Log.d(TAG, name.getPackageName());
+        }
+
+        return components.contains(component);
     }
 }
