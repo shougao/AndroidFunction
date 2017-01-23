@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zhangqc.androidfunction.nfc.NfcActivity;
+import com.example.zhangqc.androidfunction.nfc.NfcForegroundDispatchDemo;
 import com.example.zhangqc.androidfunction.nfc.SimcardManager;
 
 import java.util.ArrayList;
@@ -73,6 +74,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        findViewById(R.id.nfc_forground_dispatch).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, NfcForegroundDispatchDemo.class));
+            }
+        });
+
+
 
         mPreferAppView = (TextView) findViewById(R.id.textView_preferapp);
     }
