@@ -1,6 +1,7 @@
 package com.example.zhangqc.androidfunction;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.zhangqc.androidfunction.nfc.NfcActivity;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -20,12 +23,13 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "zqc";
     private TextView mPreferAppView;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mContext = this;
         initView();
 
     }
@@ -42,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 testDefaultActivity();
+            }
+        });
+
+        findViewById(R.id.button_jump_to_nfc).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, NfcActivity.class));
             }
         });
 
