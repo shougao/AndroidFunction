@@ -69,7 +69,8 @@
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/nfc_tech_filter" />
         </activity>
-        <activity android:name=".nfc.NfcForegroundDispatchDemo"></activity>
+        <activity android:name=".nfc.NfcForegroundDispatchDemo" />
+        <activity android:name=".nfc.CheckIntentHandlingActivity"></activity>
     </application>
 
 </manifest>

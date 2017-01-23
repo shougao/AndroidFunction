@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.zhangqc.androidfunction.nfc.CheckIntentHandlingActivity;
 import com.example.zhangqc.androidfunction.nfc.NfcActivity;
 import com.example.zhangqc.androidfunction.nfc.NfcForegroundDispatchDemo;
 import com.example.zhangqc.androidfunction.nfc.SimcardManager;
@@ -79,6 +80,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(mContext, NfcForegroundDispatchDemo.class));
+            }
+        });
+
+        findViewById(R.id.nfc_handling_query).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, CheckIntentHandlingActivity.class));
             }
         });
 
