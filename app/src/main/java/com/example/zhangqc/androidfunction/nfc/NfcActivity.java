@@ -13,6 +13,10 @@ import android.view.View;
 
 import com.example.zhangqc.androidfunction.R;
 
+
+/**
+ * 显示的处理dispatch nfc action，使用方法：enableForegroundDispatch
+ */
 public class NfcActivity extends AppCompatActivity {
 
     @Override

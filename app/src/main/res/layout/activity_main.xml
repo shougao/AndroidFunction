@@ -41,6 +41,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/button_jump_to_nfc" />
 
+
+        <Button
+            android:text="ShowSimcardName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_simcard" />
     </LinearLayout>
 
 </RelativeLayout>

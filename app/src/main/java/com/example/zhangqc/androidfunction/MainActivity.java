@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.zhangqc.androidfunction.nfc.NfcActivity;
+import com.example.zhangqc.androidfunction.nfc.SimcardManager;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 startNfc();
             }
         });
-        findViewById(R.id.button_prefer_app).setOnClickListener(new View.OnClickListener(){
+        findViewById(R.id.button_prefer_app).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -53,6 +55,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(mContext, NfcActivity.class));
+            }
+        });
+
+        findViewById(R.id.button_simcard).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SimcardManager manager = new SimcardManager(mContext);
+                ArrayList<String> names = manager.getSimcardName();
+                if (names == null || names.isEmpty()) {
+                    return;
+                }
+                for (String name : names
+                        ) {
+                    Log.d("sim name", name);
+                    Toast.makeText(mContext, name, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -84,8 +102,9 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Returns true if the supplied component name is the preferred activity
      * for any action.
+     *
      * @param component The ComponentName of your Activity, e.g.
-     *    Activity#getComponentName().
+     *                  Activity#getComponentName().
      */
     boolean isDefault(ComponentName component) {
         ArrayList<ComponentName> components = new ArrayList<ComponentName>();
@@ -94,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 //        filters.add(new IntentFilter(Intent.ACTION_DEFAULT));
 
         getPackageManager().getPreferredActivities(filters, components, null); // get all default application.
-        for(ComponentName name : components){
+        for (ComponentName name : components) {
             Log.d(TAG, name.getPackageName());
         }
 
