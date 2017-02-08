@@ -59,6 +59,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/nfc_handling_query" />
+
+
+        <Button
+            android:text="start moto nfc setup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nfc_moto_setup" />
+
+
+        <Button
+            android:text="start lenovo app store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_app_store" />
+
     </LinearLayout>
 
 </RelativeLayout>

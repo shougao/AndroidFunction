@@ -1,6 +1,8 @@
 package com.example.zhangqc.androidfunction.nfc;
 
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
@@ -21,6 +23,8 @@ public class NfcForegroundDispatchDemo extends AppCompatActivity {
     String[][]  techListsArray;
     private IntentFilter[] intentFiltersArray;
 
+    BroadcastReceiver mNfcDispatchReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,10 +33,28 @@ public class NfcForegroundDispatchDemo extends AppCompatActivity {
         mAdapter = NfcAdapter.getDefaultAdapter(this);
         techListsArray = new String[][]{new String[]{NfcF.class.getName()}, new String[]{NfcA.class.getName()}};
 
-        // android 分发系统在收到nfc tag事件后，优先处理时，执行的intent
-        mPendingIntent = PendingIntent.getActivity(
-                this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        testNFC();
+    }
 
+    /**
+     * 两种方法验证NFC的前台处理，目前方法1注释掉了。
+     * 1. activity
+     * 2. broadcast
+     */
+    private void testNFC() {
+//        方法1
+        mNfcDispatchReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.d("zqc", "received");
+            }
+        };
+//        方法2：
+        // android 分发系统在收到nfc tag事件后，优先处理时，执行的intent
+        mPendingIntent = PendingIntent.getBroadcast(this, 0, new Intent().setAction("com.zqc") , 0);
+                /*PendingIntent.getActivity(
+                this, 0, new Intent(this, NfcForgroundActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP).addFlags(PendingIntent.FLAG_UPDATE_CURRENT), 0);
+*/
         // 过滤处理的类型
         IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         try {
@@ -45,13 +67,17 @@ public class NfcForegroundDispatchDemo extends AppCompatActivity {
         intentFiltersArray = new IntentFilter[] {ndef, };
     }
 
+
     public void onPause() {
         super.onPause();
         mAdapter.disableForegroundDispatch(this);
+        unregisterReceiver(mNfcDispatchReceiver);
     }
 
     public void onResume() {
         super.onResume();
+        IntentFilter filter = new IntentFilter("com.zqc");
+        registerReceiver(mNfcDispatchReceiver, filter);
         mAdapter.enableForegroundDispatch(this, mPendingIntent, intentFiltersArray, techListsArray);
     }
 

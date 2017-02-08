@@ -70,7 +70,8 @@
                 android:resource="@xml/nfc_tech_filter" />
         </activity>
         <activity android:name=".nfc.NfcForegroundDispatchDemo" />
-        <activity android:name=".nfc.CheckIntentHandlingActivity"></activity>
+        <activity android:name=".nfc.CheckIntentHandlingActivity" />
+        <activity android:name=".nfc.NfcForgroundActivity"></activity>
     </application>
 
 </manifest>

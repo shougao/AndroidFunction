@@ -38,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("tag", "check debug");
+    }
+
     private void initView() {
         findViewById(R.id.button_nfc).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +96,45 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.nfc_moto_setup).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+
+                Intent i = new Intent("com.motorola.vzw.settings.extensions.action.VZW_NFC_ALERT_DIALOG");
+                startActivity(i);
+                if(true){
+                    return;
+                }
+
+                final String HELP_URL = "http://help.motorola.com/hc/apps/nfc/?os="
+                        + android.os.Build.VERSION.RELEASE;
+                final int REQUEST_CODE_SHOW_NFC_SETUP = 1001;
+                final String ACTION_NFC_SETUP = "com.android.nfc.action.SHOW_NOTIF_ENABLED";
+                final String PACKAGE_NFC_SETUP = "com.motorola.nfc";
+                final String CLASS_NFC_SETUP = "com.motorola.nfc.setup.NfcSetupActivity";
+
+                Intent intent = new Intent();
+                intent.setClassName(PACKAGE_NFC_SETUP, CLASS_NFC_SETUP);
+                intent.setAction(ACTION_NFC_SETUP);
+                if (intent.resolveActivityInfo(getPackageManager(), 0) != null) {
+                    intent.putExtra("vzw_flow", true);
+                    startActivityForResult(intent, REQUEST_CODE_SHOW_NFC_SETUP);
+                }
+            }
+        });
+
+        findViewById(R.id.start_app_store).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                final String STORE_PACKAGE_NAME = "com.lenovo.leos.appstore";
+                final String STORE_CLASS_NAME = "com.lenovo.leos.appstore.activities.Main";
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setClassName(STORE_PACKAGE_NAME, STORE_CLASS_NAME);
+                startActivity(intent);
+            }
+        });
 
         mPreferAppView = (TextView) findViewById(R.id.textView_preferapp);
     }
