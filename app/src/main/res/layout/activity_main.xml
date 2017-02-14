@@ -74,6 +74,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/start_app_store" />
 
+
+        <Button
+            android:text="start 支付宝"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_alipay" />
+
     </LinearLayout>
 
 </RelativeLayout>

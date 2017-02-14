@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ComponentInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
@@ -41,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("tag", "check debug");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         Log.d("tag", "check debug");
     }
 
@@ -136,7 +143,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.start_alipay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isAlipayInstalled = alipayInstallOrNot("com.eg.android.AlipayGphone");
+                if(isAlipayInstalled){
+                    Intent alipayIntent = getPackageManager().getLaunchIntentForPackage("com.eg.android.AlipayGphone");
+                    startActivity(alipayIntent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "alipay not install ", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
         mPreferAppView = (TextView) findViewById(R.id.textView_preferapp);
+    }
+
+    private boolean alipayInstallOrNot(String s) {
+        PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(s,PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     // 1.
