@@ -10,6 +10,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.zhangqc.androidfunction.MainActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -81,6 +84,27 @@
             android:layout_height="wrap_content"
             android:id="@+id/start_alipay" />
 
-    </LinearLayout>
+        <Button
+            android:text="start 微信充值"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_weixin" />
 
+
+
+        <Button
+            android:text="start Pure activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_pure_acitivty" />
+
+
+        <Button
+            android:text="允许未知源安装"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/allow_unknow_source" />
+
+    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

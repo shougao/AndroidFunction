@@ -4,10 +4,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ComponentInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.nfc.NfcAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,7 @@ import com.example.zhangqc.androidfunction.nfc.SimcardManager;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -156,6 +159,48 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        
+
+        findViewById(R.id.start_pure_acitivty).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Main4Activity.class));
+            }
+        });
+
+        findViewById(R.id.start_weixin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PackageManager manager = getPackageManager();
+                Intent intent = new Intent();
+                intent.setAction("android.nfc.action.TECH_DISCOVERED");
+//        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                // NOTE: Provide some data to help the Intent resolver
+//        intent.setData(Uri.parse("http://www.google.com"));
+                // Query for all activities that match my filter and request that the filter used
+                //  to match is returned in the ResolveInfo
+                List<ResolveInfo> infos = manager.queryIntentActivities (intent,
+                        PackageManager.GET_RESOLVED_FILTER);
+                for (ResolveInfo info : infos) {
+                    ActivityInfo activityInfo = info.activityInfo;
+                    IntentFilter filter = info.filter;
+                    if (filter != null && filter.hasAction("android.nfc.action.TECH_DISCOVERED")) {
+                        // This activity resolves my Intent with the filter I'm looking for
+                        String activityPackageName = activityInfo.packageName;
+                        if(activityPackageName.equals("com.tencent.mm")){
+                            String activityName = activityInfo.name;
+                            Intent i = new Intent(NfcAdapter.ACTION_TECH_DISCOVERED);
+                            i.setClassName("com.tencent.mm", activityName);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            startActivity(i);
+                        }
+                        String activityName = activityInfo.name;
+                        System.out.println("zqc    "+activityPackageName + "/" + activityName);
+                    }
+                }
+            }
+        });
 
         mPreferAppView = (TextView) findViewById(R.id.textView_preferapp);
     }

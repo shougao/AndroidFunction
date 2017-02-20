@@ -8,6 +8,8 @@
 
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.tencent.mm.nfc.permission.TECH_DISCOVERED" />
+    <uses-permission android:name="com.tencent.mm.nfc.permission.TECH_DISCOVERED" />
 
     <uses-feature
         android:name="android.hardware.nfc"
@@ -71,7 +73,8 @@
         </activity>
         <activity android:name=".nfc.NfcForegroundDispatchDemo" />
         <activity android:name=".nfc.CheckIntentHandlingActivity" />
-        <activity android:name=".nfc.NfcForgroundActivity"></activity>
+        <activity android:name=".nfc.NfcForgroundActivity" />
+        <activity android:name=".Main4Activity"></activity>
     </application>
 
 </manifest>
